@@ -9,7 +9,7 @@ const getUsers = async (req, res) => {
         .status(400)
         .json({ message: "user does not exist", data: null });
 
-    return res.status(400).json(users);
+    return res.status(200).json(users);
   } catch (error) {
     console.log("error inside get user", error.message);
     res.status(400).json({ message: "server Error" });

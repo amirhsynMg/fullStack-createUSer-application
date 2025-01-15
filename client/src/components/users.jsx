@@ -1,13 +1,13 @@
 import axios from "axios";
 import UserContext from "../context/user";
 import { useContext, useEffect } from "react";
-
+import newRequest from "../utils/newRequest";
 const Users = () => {
     const userContext = useContext(UserContext)
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/users');
+                const response = await newRequest.get("/users")
                 console.log(response.data);
             } catch (err) {
                 console.error(err.message);

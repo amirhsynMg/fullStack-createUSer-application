@@ -7,11 +7,14 @@ app.use(express.json());
 // initial database
 require("./startup/db")();
 
-const corsOptions = {
-  origin: "http://localhost:5173",
-};
 
-app.use(cors("http://localhost:5173"));
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 
 app.use("/api", router);
 
