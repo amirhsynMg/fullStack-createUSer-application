@@ -16,6 +16,22 @@ const getUsers = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    if (!user)
+      return res
+        .status(400)
+        .json({ message: "user does not exist", data: null });
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log("error inside get user", error.message);
+    res.status(400).json({ message: "server Error" });
+  }
+};
+
 const createUsers = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -76,4 +92,4 @@ const DeleteUsers = async (req, res) => {
   }
 };
 
-module.exports = { getUsers, createUsers, updateUsers, DeleteUsers };
+module.exports = { getUsers, createUsers, updateUsers, DeleteUsers, getUser };

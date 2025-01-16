@@ -8,9 +8,11 @@ const {
   createUsers,
   updateUsers,
   DeleteUsers,
+  getUser,
 } = require("./user.controller");
 
 router.get("/", getUsers);
+router.get("/:id", getUser);
 
 router.post(
   "/",
