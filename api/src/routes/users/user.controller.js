@@ -1,9 +1,19 @@
 const User = require("../../model/user.module");
-
+const jwt = require("jsonwebtoken");
+const config = require("config");
 const getUsers = async (req, res) => {
   try {
-    const users = await User.find({});
+    const { first_name } = req.query;
 
+    if (first_name) {
+      const data = await User.find({ first_name });
+      if (!data || data.length === 0) {
+        return res.status(404).json({ message: "no users match with query" });
+      }
+      return res.status(200).json(data);
+    }
+
+    const users = await User.find({});
     if (!users)
       return res
         .status(400)
@@ -19,13 +29,19 @@ const getUsers = async (req, res) => {
 const getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-
+    const { email, password } = req.body;
+    const id = req.params.id;
     if (!user)
       return res
         .status(400)
         .json({ message: "user does not exist", data: null });
 
-    return res.status(200).json(user);
+    if (password !== user.password) {
+      return res.status(404).json({ message: "invalid usename or password" });
+    }
+    const token = jwt.sign({ id }, config.get("jwt_key"), { expiresIn: "1d" });
+
+    res.status(200).json({ user, token });
   } catch (error) {
     console.log("error inside get user", error.message);
     res.status(400).json({ message: "server Error" });

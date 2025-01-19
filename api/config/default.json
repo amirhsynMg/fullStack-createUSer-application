@@ -2,5 +2,6 @@
   "name": "users project",
   "db": {
     "address": "mongodb://localhost:27017/full-stack-usersProject"
-  }
+  },
+  "jwt_key": "sadmafigjgassagdASDG#$@@&$*!#RFLAS:FS"
 }

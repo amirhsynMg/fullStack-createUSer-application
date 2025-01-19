@@ -4,6 +4,9 @@ import { useState } from "react";
 import newRequest from "./utils/newRequest";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import User from "./components/user";
+import Login from "./components/login";
+import Dashboard from "./components/dashboard";
+
 const App = () => {
     const [users, setUsers] = useState([])
     const [isLoading, setisLoading] = useState(true)
@@ -27,10 +30,13 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route path="/users" element={<Users />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/Users">
                         <Route path=":id" element={<User />} />
                     </Route>
                     <Route path="/" element={<Users />} />
+                    <Route path="*" element={<Users />} />
                 </Routes>
             </Router>
 
